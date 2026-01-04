@@ -8,22 +8,27 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
+import ru.ikom.auth.api.component.AuthComponent
 import ru.ikom.chat.api.component.ChatComponent
+import ru.ikom.root.component.DefaultRootComponent.Child.*
 import ru.ikom.root.view.RootContent
 
 fun defaultRootComponentFactory(
-    chatComponentFactory: ChatComponent.Factory
+    authComponentFactory: AuthComponent.Factory,
+    chatComponentFactory: ChatComponent.Factory,
 ) =
     RootComponent.Factory {
         DefaultRootComponent(
             componentContext = it,
+            authComponentFactory = authComponentFactory,
             chatComponentFactory = chatComponentFactory,
         )
     }
 
 internal class DefaultRootComponent(
     private val componentContext: ComponentContext,
-    private val chatComponentFactory: ChatComponent.Factory
+    private val authComponentFactory: AuthComponent.Factory,
+    private val chatComponentFactory: ChatComponent.Factory,
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
@@ -32,14 +37,15 @@ internal class DefaultRootComponent(
         childStack(
             source = navigation,
             serializer = Config.serializer(),
-            initialConfiguration = Config.Chat,
+            initialConfiguration = Config.Auth,
             handleBackButton = true,
             childFactory = ::createChild,
         )
 
     private fun createChild(config: Config, componentContext: ComponentContext): Child =
         when (config) {
-            is Config.Chat -> Child.ChatChild(chatComponentFactory(componentContext))
+            is Config.Auth -> AuthChild(authComponentFactory(componentContext))
+            is Config.Chat -> ChatChild(chatComponentFactory(componentContext))
         }
 
     @Composable
@@ -48,11 +54,15 @@ internal class DefaultRootComponent(
     }
 
     sealed interface Child {
+        class AuthChild(val authComponent: AuthComponent) : Child
         class ChatChild(val chatComponent: ChatComponent) : Child
     }
 
     @Serializable
     private sealed interface Config {
+        @Serializable
+        data object Auth : Config
+
         @Serializable
         data object Chat : Config
     }

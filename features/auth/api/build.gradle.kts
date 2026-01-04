@@ -54,5 +54,7 @@ dependencies {
 
     implementation(libs.decompose.android)
 
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.runtime)
 }

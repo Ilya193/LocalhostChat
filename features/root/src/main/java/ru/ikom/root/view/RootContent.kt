@@ -19,6 +19,7 @@ internal fun RootContent(
             component.childStack
         ) {
             when (val child = it.instance) {
+                is DefaultRootComponent.Child.AuthChild -> child.authComponent.Content(Modifier.fillMaxSize())
                 is DefaultRootComponent.Child.ChatChild -> child.chatComponent.Content(Modifier.fillMaxSize())
             }
         }

@@ -45,3 +45,5 @@ include(":core:common")
 include(":core:chat-logic")
 
 include(":core:voice-logic")
+
+include(":core:datasources")
