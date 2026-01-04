@@ -20,6 +20,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|locale|fontScale|keyboard|screenLayout"
             android:theme="@style/Theme.LocalhostChat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

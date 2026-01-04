@@ -5,16 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import com.arkivanov.decompose.defaultComponentContext
 import ru.ikom.localhostchat.app.App
 import ru.ikom.localhostchat.di.AppContainer
+import ru.ikom.localhostchat.platform.AndroidPermissionsManager
 import ru.ikom.localhostchat.ui.theme.LocalhostChatTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,6 +22,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        appContainer.permissionsManager = AndroidPermissionsManager(this)
+
+        // configChanges was changed
         val component = appContainer.featuresProvider
             .provideRootComponentFactory().invoke(defaultComponentContext())
 
