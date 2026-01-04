@@ -26,17 +26,23 @@ include(":features")
 
 include(":features:root")
 
-include(":features:auth")
-include(":features:auth:api")
-include(":features:auth:impl")
+include(
+    ":features:auth",
+    ":features:auth:api",
+    ":features:auth:impl"
+)
 
-include(":features:chat")
-include(":features:chat:api")
-include(":features:chat:impl")
+include(
+    ":features:chat",
+    ":features:chat:api",
+    ":features:chat:impl"
+)
 
-include(":features:permissions")
-include(":features:permissions:api")
-include(":features:permissions:impl")
+include(
+    ":features:permissions",
+    ":features:permissions:api",
+    ":features:permissions:impl"
+)
 
 include(":core")
 
@@ -47,3 +53,15 @@ include(":core:chat-logic")
 include(":core:voice-logic")
 
 include(":core:datasources")
+
+include(
+    ":core:datasources:user",
+    ":core:datasources:user:api",
+    ":core:datasources:user:impl"
+)
+
+include(
+    ":core:user-logic"
+)
+include(":core:user-logic:user-domain")
+include(":core:user-logic:user-data")

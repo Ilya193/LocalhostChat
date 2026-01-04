@@ -10,6 +10,9 @@ interface AuthComponent {
     fun Content(modifier: Modifier)
 
     fun interface Factory {
-        operator fun invoke(componentContext: ComponentContext): AuthComponent
+        operator fun invoke(
+            componentContext: ComponentContext,
+            onOpenChat: () -> Unit,
+        ): AuthComponent
     }
 }

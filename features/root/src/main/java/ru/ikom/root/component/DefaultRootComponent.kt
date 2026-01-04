@@ -6,6 +6,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import ru.ikom.auth.api.component.AuthComponent
@@ -44,9 +45,15 @@ internal class DefaultRootComponent(
 
     private fun createChild(config: Config, componentContext: ComponentContext): Child =
         when (config) {
-            is Config.Auth -> AuthChild(authComponentFactory(componentContext))
+            is Config.Auth -> AuthChild(authComponent(componentContext))
             is Config.Chat -> ChatChild(chatComponentFactory(componentContext))
         }
+
+    private fun authComponent(componentContext: ComponentContext) =
+        authComponentFactory(
+            componentContext = componentContext,
+            onOpenChat = { navigation.replaceCurrent(Config.Chat) }
+        )
 
     @Composable
     override fun Content(modifier: Modifier) {

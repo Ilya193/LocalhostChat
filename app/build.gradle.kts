@@ -69,6 +69,12 @@ dependencies {
 
     implementation(project(":core:common"))
 
+    implementation(project(":core:datasources:user:api"))
+    implementation(project(":core:datasources:user:impl"))
+
+    implementation(project(":core:user-logic:user-domain"))
+    implementation(project(":core:user-logic:user-data"))
+
     implementation(project(":features:root"))
 
     implementation(project(":features:permissions:api"))
